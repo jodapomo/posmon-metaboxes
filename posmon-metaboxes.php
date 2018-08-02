@@ -137,6 +137,14 @@ function campos_lineas() {
     ) );
 
 
+    $metabox_index->add_field( array(
+        'name'    => 'Ubicación Modelo',
+        'desc'    => 'Corrección de la posicioón de la imagen modelo. Numero negativo para mover a la izquierda, positivo para la derecha.',
+        'default' => '0',
+        'id'      => $prefix . 'index_pos_modelo',
+        'type'    => 'text_small'
+    ) );
+
     // METABOX MAIN SLIDER
     $metabox_slider_principal = new_cmb2_box( array(
         'id'            => $prefix . 'metabox_slider_principal',
@@ -239,23 +247,12 @@ function campos_lineas() {
             'add_button'    => __( 'Agregar otro Slider', 'cmb2' ),
             'remove_button' => __( 'Eliminar Slider', 'cmb2' ),
             'sortable'      => true, // beta
-            // 'closed'     => true, // true to have the groups closed by default
+            'closed'     => true, // true to have the groups closed by default
         ),
     ) );
 
 
     // Id's for group's fields only need to be unique for the group. Prefix is not needed.
-    $metabox_sliders->add_group_field($prefix . 'sliders_group', array(
-        'name'    => 'Tipo',
-        'id'      => 'type',
-        'type'    => 'radio_inline',
-        'options' => array(
-            'blur-bg'   => __( 'Tipo 1', 'cmb2' ),
-            'full-bg'   => __( 'Tipo 2', 'cmb2' ),
-            'half-img'  => __( 'Tipo 3', 'cmb2' ),
-        ),
-        'default' => 'blur-bg',
-    ));
 
     $metabox_sliders->add_group_field($prefix . 'sliders_group', array(
         'name'    => 'Tipo',
@@ -275,12 +272,12 @@ function campos_lineas() {
     $metabox_sliders->add_group_field($prefix . 'sliders_group', array(
         'name' => 'Título',
         'id'   => 'title',
-        'type' => 'text',
+        'type' => 'textarea_small',
     ));
 
     $metabox_sliders->add_group_field($prefix . 'sliders_group', array(
         'name'      => __('Color Título', 'cmb2'),
-        'id'      => 'colot_title',
+        'id'      => 'color_title',
         'type'    => 'colorpicker',
         'default' => '#ffffff',
         'attributes' => array(
