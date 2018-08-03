@@ -357,3 +357,81 @@ function campos_lineas() {
 
 }
 
+add_action( 'cmb2_admin_init', 'campos_productos' );
+
+function campos_productos() {
+    $prefix = 'posmon_campos_productos_';
+
+    // METABOX CONTENIDO
+    $metabox_producto = new_cmb2_box( array(
+        'id'            => $prefix . 'metabox_producto',
+        'title'         => __('Información del producto', 'cmb2'),
+        'object_types'  => array('productos'),
+    ));
+
+    $metabox_producto->add_field( array(
+        'name'    => 'Género',
+        'id'      =>  $prefix . 'genero_producto',
+        'type'    => 'radio_inline',
+        'options' => array(
+            'unisex'     => __( 'Unisex', 'cmb2' ),
+            'femenino'   => __( 'Femenino', 'cmb2' ),
+            'masculino'  => __( 'Masculino', 'cmb2' ),
+        ),
+        'default' => 'unisex',
+    ));
+
+    $metabox_producto->add_field( array(
+        'name' => 'Descripción',
+        'id'   => $prefix . 'desc_producto',
+        'type' => 'textarea_small',
+    ));
+
+    $metabox_producto->add_field( array(
+        'name'      => __('Opciones', 'cmb2'),
+        'id'        => $prefix . 'opciones_producto',
+        'type'      => 'text',
+        'repeatable'=> true,
+        'text' => array(
+            'add_row_text' => 'Añadir otra opción',
+        ),
+    ));
+
+    $metabox_producto->add_field( array(
+        'name' => 'Galería',
+        'desc' => 'Máximo 10 imágenes.',
+        'id'   => $prefix . 'galeria_producto',
+        'type' => 'file_list',
+        'text' => array(
+            'add_upload_files_text' => 'Agregar Imágenes',
+            'remove_image_text' => 'Quitar Imagen', 
+            'file_text' => 'Imagen:', 
+            'file_download_text' => 'Descargar', 
+            'remove_text' => 'Quitar', 
+        ),
+    ));
+
+    $metabox_producto->add_field( array(
+        'name'    => 'Imagen Destacada',
+        'desc'    => 'Imagen que se muestra en la galería general de todos los productos.',
+        'id'      => $prefix . 'imagen_destacada_producto',
+        'type'    => 'file',
+        // Optional:
+        'options' => array(
+            'url' => false, // Hide the text input for the url
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Agregar Imagen' // Change upload button text. Default: "Add or Upload File"
+        ),
+        // query_args are passed to wp.media's library query.
+        'query_args' => array(
+            'type' => array(
+            	'image/gif',
+            	'image/jpeg',
+            	'image/png',
+            ),
+        ),
+        'preview_size' => 'large', // Image size to use when previewing in the admin.
+    ) );
+
+}
