@@ -431,7 +431,6 @@ function campos_productos() {
             	'image/png',
             ),
         ),
-        'preview_size' => 'large', // Image size to use when previewing in the admin.
     ) );
 
 }
