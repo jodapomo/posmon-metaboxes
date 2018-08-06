@@ -402,6 +402,7 @@ function campos_productos() {
         'desc' => 'Máximo 10 imágenes.',
         'id'   => $prefix . 'galeria_producto',
         'type' => 'file_list',
+        'query_args' => array( 'type' => 'image' ), 
         'text' => array(
             'add_upload_files_text' => 'Agregar Imágenes',
             'remove_image_text' => 'Quitar Imagen', 
