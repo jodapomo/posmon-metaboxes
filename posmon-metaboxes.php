@@ -435,3 +435,194 @@ function campos_productos() {
     ) );
 
 }
+
+add_action( 'cmb2_admin_init', 'campos_telas' );
+
+function campos_telas() {
+    $prefix = 'posmon_campos_telas_';
+
+    // METABOX CONTENIDO
+    $metabox_telas = new_cmb2_box( array(
+        'id'            => $prefix . 'metabox_producto',
+        'title'         => __('Información del tipo de tela', 'cmb2'),
+        'object_types'  => array('telas'),
+    ));
+
+    $metabox_telas->add_field( array(
+        'name'    => 'Descripción corta',
+        'desc'      => __('ej. antifluidos', 'cmb2'),
+        'id'      =>  $prefix . 'descripcion_tela',
+        'type'    => 'text',
+    ));
+
+    $metabox_telas->add_field( array(
+        'name'      => __('Color Barra', 'cmb2'),
+        'desc'      => __('Seleccione el color de la barra del catálogo.', 'cmb2'),
+        'id'      => $prefix . 'color_barra',
+        'type'    => 'colorpicker',
+        'default' => '#ffffff',
+        'attributes' => array(
+            'data-colorpicker' => json_encode( array(
+                // Iris Options set here as values in the 'data-colorpicker' array
+                'palettes' => array( '#0070B8', '#ED3237', '#F58634', '#754598', '#67BD50', '#FFCC29'),
+            ) ),
+        ),
+    ));
+
+    $metabox_telas->add_field( array(
+        'name' => 'Galería',
+        'id'   => $prefix . 'galeria_tela',
+        'type' => 'file_list',
+        'query_args' => array( 'type' => 'image' ), 
+        'text' => array(
+            'add_upload_files_text' => 'Agregar Imágenes',
+            'remove_image_text' => 'Quitar Imagen', 
+            'file_text' => 'Imagen:', 
+            'file_download_text' => 'Descargar', 
+            'remove_text' => 'Quitar', 
+        ),
+    ));
+
+}
+
+
+
+/**
+ * Hook in and register a metabox to handle a theme options page and adds a menu item.
+ */
+function posmon_register_main_options_metabox() {
+
+    $prefix = 'posmon_admin_';
+    /**
+    * Registers main options page menu item and form.
+    */
+   $main_options = new_cmb2_box( array(
+       'id'           => $prefix . 'main_options_page',
+       'title'        => esc_html__( 'Posmon', 'cmb2' ),
+       'object_types' => array( 'options-page' ),
+       'option_key'   => $prefix . 'main_options', 
+       'icon_url'        => 'dashicons-welcome-widgets-menus', 
+       'position'        => 20,
+       'save_button'     => esc_html__( 'Guardar Cambios', 'cmb2' ), 
+   ) );
+
+    $main_options->add_field( array(
+        'name'    => 'Logo',
+        'id'      => 'logo',
+        'type'    => 'file',
+        // Optional:
+        'options' => array(
+            'url' => false, 
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Agregar Imagen'
+        ),
+        'query_args' => array(
+            'type' => array(
+            	'image/gif',
+            	'image/jpeg',
+            	'image/png',
+            ),
+        ),
+    ));
+
+    $main_options->add_field( array(
+        'name' => 'Email',
+        'id'   => 'email',
+        'type' => 'text_email',
+    ));
+
+    $main_options->add_field( array(
+        'name' => 'Teléfono Fijo',
+        'id'   => 'telefono',
+        'type' => 'text_medium',
+    ));
+
+    $main_options->add_field( array(
+        'name' => 'Celular',
+        'id'   => 'celular',
+        'type' => 'text_small',
+    ));
+
+    $main_options->add_field( array(
+        'name' => 'Ciudad - País',
+        'id'   => 'ciudad_pais',
+        'type' => 'text_medium',
+    ));
+
+    $main_options->add_field( array(
+        'name'    => 'Fondo Contáctenos',
+        'id'      => 'fondo_contacto',
+        'type'    => 'file',
+        'options' => array(
+            'url' => false,
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Agregar Imagen' 
+        ),
+        'query_args' => array(
+            'type' => array(
+            	'image/gif',
+            	'image/jpeg',
+            	'image/png',
+            ),
+        ),
+    ));
+
+   $empresa_options = new_cmb2_box( array(
+       'id'           => $prefix . 'empresa_options_page',
+       'title'        => esc_html__( 'La Empresa', 'cmb2' ),
+       'object_types' => array( 'options-page' ),
+       'option_key'   => $prefix . 'empresa_options',
+       'parent_slug'  => $prefix . 'main_options',
+   ) );
+
+
+   $empresa_options->add_field( array(
+        'name' => '¿Quienes Somos?',
+        'id' => 'quienes_somos',
+        'type' => 'textarea'
+    ));
+
+    $empresa_options->add_field( array(
+        'name' => 'Nuestros Valores',
+        'desc' => 'Máximo 4 valores',
+        'id' => 'nuestros_valores',
+        'type' => 'text_medium',
+        'repeatable'  => true,
+    ));
+
+    $empresa_options->add_field( array(
+        'name' => 'Misión',
+        'id' => 'mision',
+        'type' => 'textarea'
+    ));
+
+    $empresa_options->add_field( array(
+        'name' => 'Visión',
+        'id' => 'vision',
+        'type' => 'textarea'
+    ));
+
+    $empresa_options->add_field( array(
+        'name'    => 'Fondo La Empresa',
+        'id'      => 'fondo_empresa',
+        'type'    => 'file',
+        'options' => array(
+            'url' => false,
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Agregar Imagen' 
+        ),
+        'query_args' => array(
+            'type' => array(
+            	'image/gif',
+            	'image/jpeg',
+            	'image/png',
+            ),
+        ),
+    ));
+
+    
+}
+add_action( 'cmb2_admin_init', 'posmon_register_main_options_metabox' );
