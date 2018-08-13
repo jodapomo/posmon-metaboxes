@@ -585,11 +585,38 @@ function posmon_register_main_options_metabox() {
     ));
 
     $empresa_options->add_field( array(
-        'name' => 'Nuestros Valores',
-        'desc' => 'Máximo 4 valores',
-        'id' => 'nuestros_valores',
+        'name' => 'Nuesta Historia',
+        'id' => 'historia',
+        'type' => 'textarea'
+    ));
+
+    $empresa_options->add_field( array(
+        'id'          => 'nuestros_valores',
+        'type'        => 'group',
+        'title'       => 'Valores',
+        'description' => 'Valores: Máximo 6',
+        'options'     => array(
+            'group_title'   => __( 'Valor {#}', 'cmb2' ), // since version 1.1.4, {#} gets replaced by row number
+            'add_button'    => __( 'Agregar otro Valor', 'cmb2' ),
+            'remove_button' => __( 'Eliminar Valor', 'cmb2' ),
+            'sortable'      => true, // beta
+            'closed'     => true, // true to have the groups closed by default
+        ),
+    ) );
+
+
+    // Id's for group's fields only need to be unique for the group. Prefix is not needed.
+
+    $empresa_options->add_group_field('nuestros_valores', array(
+        'name' => 'Valor',
+        'id' => 'valor',
         'type' => 'text_medium',
-        'repeatable'  => true,
+    ));
+
+    $empresa_options->add_group_field('nuestros_valores', array(
+        'name' => 'Descripción',
+        'id'   => 'desc',
+        'type' => 'textarea_small',
     ));
 
     $empresa_options->add_field( array(
