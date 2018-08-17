@@ -153,6 +153,13 @@ function campos_lineas() {
     ));
 
     $metabox_slider_principal->add_field( array(
+        'name' => '<img src="' . get_template_directory_uri() . '/img/main_slider.jpg' . '" style="width: 100%;">',
+        'desc' => 'Ejemplo',
+        'type' => 'title',
+        'id'   => 'wiki_test_title'
+    ) );
+
+    $metabox_slider_principal->add_field( array(
         'name'      => __('Color Título', 'cmb2'),
         'id'      => $prefix . 'color_titulo_slider_principal',
         'type'    => 'colorpicker',
@@ -259,11 +266,10 @@ function campos_lineas() {
         'id'      => 'type',
         'type'    => 'radio_inline',
         'options' => array(
-            'blur-bg'   => __( 'Tipo 1', 'cmb2' ),
-            'full-bg'   => __( 'Tipo 2', 'cmb2' ),
-            'half-img'  => __( 'Tipo 3', 'cmb2' ),
+            'image-right'  => __( 'Tipo 1', 'cmb2' ),
+            'image-left'  => __( 'Tipo 2', 'cmb2' ),
         ),
-        'default' => 'blur-bg',
+        'default' => 'image-right',
     ));
 
 
@@ -310,7 +316,6 @@ function campos_lineas() {
 
     $metabox_sliders->add_group_field($prefix . 'sliders_group', array(
         'name'    => 'Imagen',
-        'desc'    => '<h3>Según el tipo de slider:</h3>- Tipo 1: imagen fondo slider (se recomienda sea desenfocada). <br> - Tipo 2: imagen fondo slider (imagen mucho más ancha que alta). <br> - Tipo 3: imagen a la derecha del slider.',
         'id'      => 'image',
         'type'    => 'file',
         // Optional:
@@ -333,7 +338,6 @@ function campos_lineas() {
 
     $metabox_sliders->add_group_field($prefix . 'sliders_group', array(
         'name'    => 'Imagen Modelo',
-        'desc'    => 'Imagen con modelo. Sólo aplica para slider Tipo 1',
         'id'      => 'image_modelo',
         'type'    => 'file',
         // Optional:
@@ -444,7 +448,7 @@ function campos_telas() {
     // METABOX CONTENIDO
     $metabox_telas = new_cmb2_box( array(
         'id'            => $prefix . 'metabox_producto',
-        'title'         => __('Información del tipo de tela', 'cmb2'),
+        'title'         => __('Información del insumo', 'cmb2'),
         'object_types'  => array('telas'),
     ));
 
@@ -485,6 +489,212 @@ function campos_telas() {
 
 }
 
+
+add_action( 'cmb2_admin_init', 'campos_insumos' );
+
+function campos_insumos() {
+    $prefix = 'posmon_campos_insumos_';
+
+    $metabox_color = new_cmb2_box( array(
+        'id'           => $prefix . 'metabox_color',
+        'title'        => 'Color',
+        'object_types' => array( 'page' ), // post type
+        'show_on'      => array( 'key' => 'page-template', 'value' => 'insumos.php' ),
+    ));
+
+    $metabox_color->add_field( array(
+        'name'      => __('Color Títulos Catálogo', 'cmb2'),
+        'id'      => $prefix . 'color_titulo_catalogo',
+        'type'    => 'colorpicker',
+        'default' => '#ffffff',
+        'attributes' => array(
+            'data-colorpicker' => json_encode( array(
+                // Iris Options set here as values in the 'data-colorpicker' array
+                'palettes' => array( '#0070B8', '#ED3237', '#F58634', '#754598', '#67BD50', '#FFCC29'),
+            ) ),
+        ),
+    ));
+
+    $metabox_principal = new_cmb2_box( array(
+        'id'           => $prefix . 'metabox_principal',
+        'title'        => 'Textos Principales',
+        'object_types' => array( 'page' ), // post type
+        'show_on'      => array( 'key' => 'page-template', 'value' => 'insumos.php' ),
+    ));
+
+    $metabox_principal->add_field( array(
+        'name'    => 'Párrafo 1',
+        'id'      =>  $prefix . 'principal_parrafo_1',
+        'type' => 'textarea'
+    ));
+
+    $metabox_principal->add_field( array(
+        'name'    => 'Párrafo 2',
+        'id'      =>  $prefix . 'principal_parrafo_2',
+        'type' => 'textarea'
+    ));
+
+    $metabox_principal->add_field( array(
+        'name'    => 'Párrafo 3',
+        'id'      =>  $prefix . 'principal_parrafo_3',
+        'type' => 'textarea'
+    ));
+
+    $metabox_principal->add_field( array(
+        'name'    => 'Imagen Fondo Grande',
+        'desc'    => 'Imagen que se muestra a la derecha.',
+        'id'      => $prefix . 'principal_fondo_1',
+        'type'    => 'file',
+        // Optional:
+        'options' => array(
+            'url' => false, // Hide the text input for the url
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Agregar Imagen' // Change upload button text. Default: "Add or Upload File"
+        ),
+        // query_args are passed to wp.media's library query.
+        'query_args' => array(
+            'type' => array(
+            	'image/gif',
+            	'image/jpeg',
+            	'image/png',
+            ),
+        ),
+    ) );
+
+    $metabox_principal->add_field( array(
+        'name'    => 'Imagen Fondo Pequeña',
+        'desc'    => 'Imagen que se muestra a la izquierda.',
+        'id'      => $prefix . 'principal_fondo_2',
+        'type'    => 'file',
+        // Optional:
+        'options' => array(
+            'url' => false, // Hide the text input for the url
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Agregar Imagen' // Change upload button text. Default: "Add or Upload File"
+        ),
+        // query_args are passed to wp.media's library query.
+        'query_args' => array(
+            'type' => array(
+            	'image/gif',
+            	'image/jpeg',
+            	'image/png',
+            ),
+        ),
+    ) );
+
+    $metabox_insumos = new_cmb2_box( array(
+        'id'           => $prefix . 'metabox_insumos',
+        'title'        => 'Insumos',
+        'object_types' => array( 'page' ), // post type
+        'show_on'      => array( 'key' => 'page-template', 'value' => 'insumos.php' ),
+    ));
+
+    $metabox_insumos->add_field( array(
+        'name'    => 'Texto',
+        'id'      =>  $prefix . 'insumos_desc',
+        'type' => 'textarea'
+    ));
+
+    $metabox_insumos->add_field( array(
+        'name'    => 'Imagen Marcas',
+        'id'      => $prefix . 'insumos_image',
+        'type'    => 'file',
+        // Optional:
+        'options' => array(
+            'url' => false, // Hide the text input for the url
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Agregar Imagen' // Change upload button text. Default: "Add or Upload File"
+        ),
+        // query_args are passed to wp.media's library query.
+        'query_args' => array(
+            'type' => array(
+            	'image/gif',
+            	'image/jpeg',
+            	'image/png',
+            ),
+        ),
+    ) );
+
+
+    $metabox_tecnologias = new_cmb2_box( array(
+        'id'           => $prefix . 'metabox_tecnologias',
+        'title'        => 'Tecnologías Textiles',
+        'object_types' => array( 'page' ), // post type
+        'show_on'      => array( 'key' => 'page-template', 'value' => 'insumos.php' ),
+    ));
+
+    $metabox_tecnologias->add_field( array(
+        'name'    => 'Texto',
+        'id'      =>  $prefix . 'tecnologias_desc',
+        'type' => 'textarea'
+    ));
+
+    $metabox_tecnologias->add_field( array(
+        'name'    => 'Imagen Tecnologías Textiles',
+        'id'      => $prefix . 'tecnologias_image_1',
+        'type'    => 'file',
+        // Optional:
+        'options' => array(
+            'url' => false, // Hide the text input for the url
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Agregar Imagen' // Change upload button text. Default: "Add or Upload File"
+        ),
+        // query_args are passed to wp.media's library query.
+        'query_args' => array(
+            'type' => array(
+            	'image/gif',
+            	'image/jpeg',
+            	'image/png',
+            ),
+        ),
+    ) );
+
+    $metabox_tecnologias->add_field( array(
+        'name'    => 'Imagen Beneficios Adicionales',
+        'id'      => $prefix . 'tecnologias_image_2',
+        'type'    => 'file',
+        // Optional:
+        'options' => array(
+            'url' => false, // Hide the text input for the url
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Agregar Imagen' // Change upload button text. Default: "Add or Upload File"
+        ),
+        // query_args are passed to wp.media's library query.
+        'query_args' => array(
+            'type' => array(
+            	'image/gif',
+            	'image/jpeg',
+            	'image/png',
+            ),
+        ),
+    ) );
+
+    $metabox_tecnologias->add_field( array(
+        'name'    => 'Logo Lafayette',
+        'id'      => $prefix . 'tecnologias_logo',
+        'type'    => 'file',
+        // Optional:
+        'options' => array(
+            'url' => false, // Hide the text input for the url
+        ),
+        'text'    => array(
+            'add_upload_file_text' => 'Agregar Imagen' // Change upload button text. Default: "Add or Upload File"
+        ),
+        // query_args are passed to wp.media's library query.
+        'query_args' => array(
+            'type' => array(
+            	'image/gif',
+            	'image/jpeg',
+            	'image/png',
+            ),
+        ),
+    ) );
+}
 
 
 /**
