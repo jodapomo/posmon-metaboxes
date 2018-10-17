@@ -438,6 +438,17 @@ function campos_productos() {
         ),
     ) );
 
+    $metabox_producto->add_field( array(
+        'name'    => 'Botón Catálogo Telas',
+        'id'      =>  $prefix . 'boton_telas_producto',
+        'type'    => 'radio_inline',
+        'options' => array(
+            'si'     => __( 'Si', 'cmb2' ),
+            'no'   => __( 'No', 'cmb2' ),
+        ),
+        'default' => 'si',
+    ));
+
 }
 
 add_action( 'cmb2_admin_init', 'campos_telas' );
