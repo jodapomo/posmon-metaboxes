@@ -381,6 +381,7 @@ function campos_productos() {
             'unisex'     => __( 'Unisex', 'cmb2' ),
             'femenino'   => __( 'Femenino', 'cmb2' ),
             'masculino'  => __( 'Masculino', 'cmb2' ),
+            'oculto'  => __( 'Oculto', 'cmb2' )
         ),
         'default' => 'unisex',
     ));
